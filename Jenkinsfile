@@ -26,7 +26,7 @@ stages {
         
         stage('Get credentials') {
             steps{
-           withVault(configuration: [timeout: 60, vaultCredentialId: 'Vault_Token', vaultUrl: 'http://127.0.0.1:8200'], vaultSecrets: [[path: 'kv/abi/secrets', secretValues: [[envVar: 'AWS_ACCESS_KEY_ID',vaultKey: 'AWS_ACCESS_KEY_ID'], [envVar: 'AWS_SECRET_ACCESS_KEY',vaultKey: 'AWS_SECRET_ACCESS_KEY']]]]) {
+           withVault(configuration: [timeout: 60, vaultCredentialId: 'Vault_Token', vaultUrl: 'http://127.0.0.1:8200'], vaultSecrets: [[path: 'kv/abi/secrets', secretValues: [[envVar: 'AWS_ACCESS_KEY_ID',vaultKey: 'AWS_ACCESS_KEY_ID']]],]) {
     //sh 'echo $AWS_ACCESS_KEY_ID'    
     sh 'echo got credentials'    
 }
