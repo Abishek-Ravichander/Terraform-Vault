@@ -4,7 +4,7 @@ def secrets = [
     [envVar: 'AWS_SECRET_ACCESS_KEY',vaultKey: 'AWS_SECRET_ACCESS_KEY']]],
 ]
 
-def configuration = [vaultUrl: 'http://127.0.0.1:8200',  vaultCredentialId: 'Vault_Token', engineVersion: 2]
+def configuration = [vaultUrl: 'http://127.0.0.1:8200/',  vaultCredentialId: 'Vault_Token', engineVersion: 2]
 
 pipeline {
 environment {
