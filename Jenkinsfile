@@ -11,7 +11,7 @@ stages {
                  script{
 
                         
-                            git "https://github.com/Abishek-Ravichander/Terraform-Chef.git"
+                            git "https://github.com/Abishek-Ravichander/Terraform-Vault.git"
                         
                     }
                 }
@@ -28,7 +28,7 @@ stages {
         stage('Plan') {
             steps {
                 bat 'cd&cd terraform/Terraform-Vault & terraform init -input=false'
-                
+                bat 'cd&cd terraform/Terraform-Vault & terraform destroy -auto-approve'
                 bat "cd&cd terraform/Terraform-Vault & terraform plan -input=false -out tfplan "
                 bat 'cd&cd terraform/Terraform-Vault & terraform show -no-color tfplan > tfplan.txt'
             }
