@@ -1,7 +1,6 @@
 pipeline {
 environment {
-        AWS_ACCESS_KEY_ID     = credentials('ABI_ACCESS_KEY')
-        AWS_SECRET_ACCESS_KEY = credentials('ABI_SECRECT_KEY')
+        
         AWS_DEFAULT_REGION = "us-east-1"
     }
 agent  any
@@ -24,6 +23,15 @@ stages {
                         '''
                 }
             }
+        
+        stage('Get credentials') {
+            steps{
+           withVault(configuration: [timeout: 60, vaultCredentialId: 'Vault_Token', vaultUrl: 'http://127.0.0.1:8200'], vaultSecrets: [[path: 'kv/abi/secrets', secretValues: [[envVar: 'AWS_ACCESS_KEY_ID',vaultKey: 'AWS_ACCESS_KEY_ID'], [envVar: 'AWS_SECRET_ACCESS_KEY',vaultKey: 'AWS_SECRET_ACCESS_KEY']]]]) {
+    //sh 'echo $AWS_ACCESS_KEY_ID'    
+    sh 'echo got credentials'    
+}
+}
+        }
         
         stage('Plan') {
             steps {
