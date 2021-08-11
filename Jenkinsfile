@@ -1,3 +1,11 @@
+def secrets = [
+  [path: 'kv/abi/secrets', engineVersion: 2, secretValues: [
+   [envVar: 'AWS_ACCESS_KEY_ID',vaultKey: 'AWS_ACCESS_KEY_ID'],
+    [envVar: 'AWS_SECRET_ACCESS_KEY',vaultKey: 'AWS_SECRET_ACCESS_KEY']]],
+]
+
+def configuration = [vaultUrl: 'http://127.0.0.1:8200',  vaultCredentialId: 'Vault_Token', engineVersion: 2]
+
 pipeline {
 environment {
         
@@ -26,7 +34,7 @@ stages {
         
         stage('Get credentials') {
             steps{
-           withVault(configuration: [timeout: 60, vaultCredentialId: 'Vault_Token', vaultUrl: 'http://127.0.0.1:8200'], vaultSecrets: [[path: 'kv/abi/secrets', secretValues: [[envVar: 'AWS_ACCESS_KEY_ID',vaultKey: 'AWS_ACCESS_KEY_ID']]],]) {
+           withVault([configuration: configuration, vaultSecrets: secrets]) {
     //sh 'echo $AWS_ACCESS_KEY_ID'    
     sh 'echo got credentials'    
 }
