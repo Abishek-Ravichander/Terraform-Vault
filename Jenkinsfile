@@ -29,8 +29,8 @@ stages {
         stage('Plan') {
             steps {
                      withCredentials([vaultString(credentialsId: 'AWS_ACCESS_KEY_VAULT', variable: 'AWS_ACCESS_KEY_ID'), vaultString(credentialsId: 'AWS_SECRET_ACCESS_KEY_VAULT', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                bat 'cd&cd terraform/Terraform-Vault & terraform init -input=false'
-                bat 'cd&cd terraform/Terraform-Vault & terraform destroy -auto-approve -var root_password= $AWS_ACCESS_KEY_ID'
+                bat 'cd&cd terraform/Terraform-Vault & terraform init -input=false -var root_password= $AWS_ACCESS_KEY_ID'
+                //bat 'cd&cd terraform/Terraform-Vault & terraform destroy -auto-approve'
                 bat "cd&cd terraform/Terraform-Vault & terraform plan -input=false -out tfplan -var root_password= $AWS_ACCESS_KEY_ID"
                 bat 'cd&cd terraform/Terraform-Vault & terraform show -no-color tfplan > tfplan.txt'
                      }
