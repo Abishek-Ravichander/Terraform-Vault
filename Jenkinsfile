@@ -5,7 +5,7 @@ environment {
     }
 agent  any
 stages {
-         stage('Vault') {
+         stage('Vault - AWS connection check') {
             steps {
                 withCredentials([vaultString(credentialsId: 'AWS_ACCESS_KEY_VAULT', variable: 'AWS_ACCESS_KEY_ID'), vaultString(credentialsId: 'AWS_SECRET_ACCESS_KEY_VAULT', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                        sh '''
@@ -25,23 +25,15 @@ stages {
                     }
                 }
             }
-        stage('AWS Connection Check') {
-            steps {
-                        sh '''
-                        aws --version
-                        aws ec2 describe-instances
-                        '''
-                }
-            }
-        
-      
-        
+                            
         stage('Plan') {
             steps {
+                     withCredentials([vaultString(credentialsId: 'AWS_ACCESS_KEY_VAULT', variable: 'AWS_ACCESS_KEY_ID'), vaultString(credentialsId: 'AWS_SECRET_ACCESS_KEY_VAULT', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 bat 'cd&cd terraform/Terraform-Vault & terraform init -input=false'
                 bat 'cd&cd terraform/Terraform-Vault & terraform destroy -auto-approve'
                 bat "cd&cd terraform/Terraform-Vault & terraform plan -input=false -out tfplan "
                 bat 'cd&cd terraform/Terraform-Vault & terraform show -no-color tfplan > tfplan.txt'
+                     }
             }
         }
        
