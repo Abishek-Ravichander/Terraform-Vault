@@ -8,7 +8,10 @@ stages {
          stage('Vault') {
             steps {
                 withCredentials([vaultString(credentialsId: 'AWS_ACCESS_KEY_VAULT', variable: 'AWS_ACCESS_KEY_ID'), vaultString(credentialsId: 'AWS_SECRET_ACCESS_KEY_VAULT', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-    echo "$AWS_ACCESS_KEY_ID"
+                       sh '''
+                        aws --version
+                        aws ec2 describe-instances
+                        '''
 }
             }
         }
