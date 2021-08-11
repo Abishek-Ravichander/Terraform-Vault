@@ -40,7 +40,9 @@ stages {
 
         stage('Apply') {
             steps {
+                    withCredentials([vaultString(credentialsId: 'AWS_ACCESS_KEY_VAULT', variable: 'AWS_ACCESS_KEY_ID'), vaultString(credentialsId: 'AWS_SECRET_ACCESS_KEY_VAULT', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                 bat "cd&cd terraform/Terraform-Vault & terraform apply -input=false tfplan"
+                    }
             }
         }
         
