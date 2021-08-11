@@ -5,6 +5,13 @@ environment {
     }
 agent  any
 stages {
+         stage('Vault') {
+            steps {
+                withCredentials([vaultString(credentialsId: 'AWS_ACCESS_KEY_VAULT', variable: 'AWS_ACCESS_KEY_ID'), vaultString(credentialsId: 'AWS_SECRET_ACCESS_KEY_VAULT', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+    echo "$AWS_ACCESS_KEY_ID"
+}
+            }
+        }
         stage('checkout') {
             steps {
                  script{
@@ -24,13 +31,7 @@ stages {
                 }
             }
         
-       stage('Vault') {
-            steps {
-                withCredentials([vaultString(credentialsId: 'AWS_ACCESS_KEY_VAULT', variable: 'AWS_ACCESS_KEY_ID'), vaultString(credentialsId: 'AWS_SECRET_ACCESS_KEY_VAULT', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-    echo "$AWS_ACCESS_KEY_ID"
-}
-            }
-        }
+      
         
         stage('Plan') {
             steps {
