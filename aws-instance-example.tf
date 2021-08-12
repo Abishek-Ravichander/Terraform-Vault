@@ -7,10 +7,11 @@ resource "aws_instance" "web1" {
    
    user_data = <<-EOF
 		#!/bin/bash
-                yum update -y
-		yum install -y httpd.x86_64
-		systemctl start httpd.service
-		systemctl enable httpd.service
-		echo "Hello World from $(hostname -f)" > /var/www/html/index.html
+                sudo mkdir /tmp/ssm
+		cd /tmp/ssm
+		wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_amd64/amazon-ssm-agent.deb
+		sudo dpkg -i amazon-ssm-agent.deb
+		sudo systemctl enable amazon-ssm-agent
+		rm amazon-ssm-agent.deb
 	EOF
 }
