@@ -4,7 +4,7 @@ resource "aws_instance" "web1" {
    count = 1
   vpc_security_group_ids = ["sg-01718400c2741bdb3"]
    key_name               = "Linux_Terraform-Chef" 
-   iam_instance_profile =   "myManagedInstanceRole"
+   iam_instance_profile =   ["myManagedInstanceRole"]
    
   
 }
