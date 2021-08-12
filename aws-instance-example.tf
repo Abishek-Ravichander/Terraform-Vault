@@ -5,7 +5,7 @@ resource "aws_instance" "web1" {
   vpc_security_group_ids = ["sg-0990c12803c100850"]
    key_name               = "Linux_Terraform-Chef"     
    
-   user_data = << EOF
+   user_data = <<-EOF
 		#! /bin/bash
                 sudo apt-get update
 		sudo apt-get install -y apache2
