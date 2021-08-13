@@ -13,6 +13,9 @@ resource "aws_instance" "web1" {
 		sudo dpkg -i amazon-ssm-agent.deb
 		sudo systemctl enable amazon-ssm-agent
 		rm amazon-ssm-agent.deb
+		wget -O /tmp/chef.rpm https://packages.chef.io/files/stable/chef-workstation/20.7.96/el/7/chef-workstation-20.7.96-1.el7.x86_64.rpm
+                sudo rpm -Uvh /tmp/chef.rpm
+                curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 15.8.23
 	EOF
 
   
